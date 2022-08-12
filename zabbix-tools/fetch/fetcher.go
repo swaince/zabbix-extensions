@@ -1,7 +1,9 @@
 package fetch
 
 import (
+	"fmt"
 	"github.com/gocolly/colly"
+	"github.com/swaince/zabbix-tools/common"
 )
 
 func FetchDoc(url string, tableIndex int, excludes ...string) []*FieldObject {
@@ -36,9 +38,13 @@ func FetchDoc(url string, tableIndex int, excludes ...string) []*FieldObject {
 			})
 
 			f.Parse()
+			if common.IsChinese(f.ParseKey) {
+				fmt.Println(f.ParseKey)
+				return
+			}
 			if len(excludeFields) > 0 {
 				for _, field := range excludeFields {
-					if f.NewKey == field {
+					if f.ParseKey == field {
 						return
 					}
 				}

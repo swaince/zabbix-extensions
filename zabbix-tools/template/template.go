@@ -4,11 +4,13 @@ import (
 	"github.com/swaince/zabbix-tools/fetch"
 	"html/template"
 	"io"
+	"io/fs"
+	"os"
+	"path/filepath"
 )
 
 const (
-	PackageTemplate = `
-package {{ .Package }}
+	PackageTemplate = `package {{ .Package }}
 
 {{ range .Structs }}
 type {{ .StructName }} struct {
@@ -37,4 +39,16 @@ func Render(c *fetch.PackageObject, wr io.Writer) {
 		panic(err)
 	}
 
+}
+
+func Write(packObj *fetch.PackageObject, fileName string) {
+
+	dir := filepath.Dir(fileName)
+	os.MkdirAll(dir, fs.ModeDir)
+	f, err := os.Create(fileName)
+	if err != nil {
+		panic(err)
+	}
+
+	Render(packObj, f)
 }

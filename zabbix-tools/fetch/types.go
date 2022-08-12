@@ -64,13 +64,14 @@ var (
 )
 
 type FieldObject struct {
-	RawKey  string
-	RawType string
-	RawDesc string
-	NewKey  string
-	NewType string
-	NewDesc string
-	Tag     string
+	RawKey   string
+	RawType  string
+	RawDesc  string
+	NewKey   string
+	NewType  string
+	NewDesc  string
+	Tag      string
+	ParseKey string
 }
 
 func (f *FieldObject) Parse() {
@@ -79,24 +80,22 @@ func (f *FieldObject) Parse() {
 	f.NewType = ParseType(f.RawType)
 	f.NewDesc = f.RawDesc
 	f.Tag = fmt.Sprintf("`json:\"%s,omitempty\"`", parseKey)
+	f.ParseKey = parseKey
 }
 
 func ParseKey(rawKey string) string {
 	key := rawKey
 	sm := KeyRegexp.FindAllStringSubmatch(key, 1)
+	if len(sm) != 1 {
+		return fmt.Sprintf("键[%s]包含中文无效", rawKey)
+	}
 	key = KeyRegexp.ReplaceAllString(key, sm[0][1])
 	return key
 }
 
 // ParseType /**
 func ParseType(rawType string) string {
-	if strings.Contains(rawType, "array") || strings.Contains(rawType, "数组") || strings.Contains(rawType, "属组") {
-		t := strings.ReplaceAll(rawType, "array", "")
-		t = strings.ReplaceAll(t, "/", "")
-		t = strings.ReplaceAll(t, "数组", "")
-		t = strings.ReplaceAll(t, "属组", "")
-		return fmt.Sprintf("%s%s", "[]", ParseType(t))
-	} else if rawType == "boolean" || rawType == "布尔值" {
+	if rawType == "boolean" || rawType == "布尔值" || rawType == "布尔" {
 		return "bool"
 	} else if rawType == "flag" || rawType == "标记" {
 		return "bool"
@@ -108,16 +107,27 @@ func ParseType(rawType string) string {
 		return "string"
 	} else if rawType == "text" {
 		return "string"
-	} else if rawType == "timestamp" {
+	} else if rawType == "timestamp" || rawType == "时间戳" {
 		return "int64"
 	} else if rawType == "array" || rawType == "属组" || rawType == "数组" {
 		return "[]interface{} /* TODO */"
-	} else if rawType == "object" || rawType == "对象" {
+	} else if rawType == "object" || rawType == "对象" || rawType == "HTTP fields" || rawType == "Media type URLs" {
 		return "interface{} /* TODO */"
 	} else if rawType == "query" || rawType == "查询" {
 		return "map[string][]string"
+	} else if rawType == "id" {
+		return "string"
+	} else if strings.Contains(rawType, "array") || strings.Contains(rawType, "数组") || strings.Contains(rawType, "属组") {
+		t := strings.ReplaceAll(rawType, "array", "")
+		t = strings.ReplaceAll(t, "/", "")
+		t = strings.ReplaceAll(t, "数组", "")
+		t = strings.ReplaceAll(t, "属组", "")
+		t = strings.ReplaceAll(t, "of", "")
+		t = strings.ReplaceAll(t, "objects", "object")
+		t = strings.TrimSpace(t)
+		return fmt.Sprintf("%s%s", "[]", ParseType(t))
 	} else {
-		panic(errors.New("type %s don't support"))
+		panic(errors.New(fmt.Sprintf("type %s don't support", rawType)))
 	}
 }
 
@@ -143,6 +153,7 @@ type StructObject struct {
 }
 
 type PackageObject struct {
-	Package string
-	Structs []*StructObject
+	Package  string
+	FileName string
+	Structs  []*StructObject
 }

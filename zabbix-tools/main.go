@@ -4,7 +4,6 @@ import (
 	"github.com/swaince/zabbix-tools/common"
 	"github.com/swaince/zabbix-tools/fetch"
 	"github.com/swaince/zabbix-tools/template"
-	"os"
 )
 
 func main() {
@@ -34,5 +33,5 @@ func main() {
 		Structs: []*fetch.StructObject{getBase, hostObj, hostGetObj},
 	}
 
-	template.Render(p, os.Stdout)
+	template.Write(p, "model/host.go")
 }
