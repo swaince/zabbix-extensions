@@ -3,29 +3,35 @@ package template
 import (
 	"github.com/swaince/zabbix-tools/fetch"
 	"html/template"
-	"os"
+	"io"
 )
 
 const (
-	StructTemplate = `
+	PackageTemplate = `
 package {{ .Package }}
 
+{{ range .Structs }}
 type {{ .StructName }} struct {
-{{ if .Parent }}
+    {{ if .Parent }}
 	{{ .Parent }}
-{{ end }}
-{{range .Fields }}
+    {{ end }}
+    {{- range .Fields }}
     /**
-    {{ .NewDesc }}
+    {{ .NewDesc | unescaped }}
     */
-	{{ .NewKey}} {{ .NewType }}
-{{end}}
-}`
+	{{ .NewKey}} {{ .NewType }} {{ .Tag | unescaped }}
+    {{ end }}
+}
+{{ end }}`
 )
 
-func Render(c *fetch.ClassObject) {
-	tmpl, _ := template.New(c.StructName).Parse(StructTemplate)
-	err := tmpl.Execute(os.Stdout, c)
+func Render(c *fetch.PackageObject, wr io.Writer) {
+	tmpl, _ := template.New(c.Package).Funcs(template.FuncMap{
+		"unescaped": func(s string) template.HTML {
+			return template.HTML(s)
+		},
+	}).Parse(PackageTemplate)
+	err := tmpl.Execute(wr, c)
 
 	if err != nil {
 		panic(err)
