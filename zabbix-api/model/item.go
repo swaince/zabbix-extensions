@@ -80,7 +80,7 @@ type Item struct {
 	/**
 	  HTTP agent 监控项字段。具有 HTTP（S）请求头的对象，其中请求头名用作键，请求头值用作值。示例：{ "User-Agent": "Zabbix" }
 	*/
-	Headers interface{}/* TODO */ `json:"headers,omitempty"`
+	Headers HttpHeaderObject `json:"headers,omitempty"`
 
 	/**
 	  历史数据应保留多长时间的单位。同样接受用户宏。默认： 90天。
@@ -145,7 +145,7 @@ type Item struct {
 	/**
 	  脚本监控项的其他参数。具有 “名称” 和 “值” 属性的对象数组，其中名称必须唯一。
 	*/
-	Parameters []interface{}/* TODO */ `json:"parameters,omitempty"`
+	Parameters ParameterObject `json:"parameters,omitempty"`
 
 	/**
 	  验证密码。用于一般检查、SSH、Telnet、数据库监控、JMX 和 HTTP agent 监控项。当 JMX 使用时，用户名应与密码一起指定，或者两个属性都留空。
@@ -180,7 +180,7 @@ type Item struct {
 	/**
 	  HTTP agent 监控项字段。查询参数。具有 “键”：“值” 对的对象数组，其中值可以是空字符串。
 	*/
-	QueryFields []interface{}/* TODO */ `json:"query_fields,omitempty"`
+	QueryFields QueryFieldObject `json:"query_fields,omitempty"`
 
 	/**
 	  HTTP agent 监控项字段。请求方法类型：0 - （默认） GET；1 - POST；2 - PUT；3 - HEAD。
@@ -284,12 +284,12 @@ type ItemCreateParam struct {
 	/**
 	  监控项 预处理 选项。
 	*/
-	Preprocessing []interface{}/* TODO */ `json:"preprocessing,omitempty"`
+	Preprocessing []*PreprocessingObject `json:"preprocessing,omitempty"`
 
 	/**
 	  监控项 标签 。
 	*/
-	Tags []interface{}/* TODO */ `json:"tags,omitempty"`
+	Tags []*TagObject `json:"tags,omitempty"`
 }
 
 type ItemUpdateParam struct {
@@ -298,12 +298,12 @@ type ItemUpdateParam struct {
 	/**
 	  监控项预处理 用于替换当前预处理选项。
 	*/
-	Preprocessing []interface{}/* TODO */ `json:"preprocessing,omitempty"`
+	Preprocessing []*PreprocessingObject `json:"preprocessing,omitempty"`
 
 	/**
 	  标签 用于替换当前标签。
 	*/
-	Tags []interface{}/* TODO */ `json:"tags,omitempty"`
+	Tags []*TagObject `json:"tags,omitempty"`
 }
 
 type ItemGetParam struct {
@@ -387,7 +387,7 @@ type ItemGetParam struct {
 	/**
 	  仅返回给定标签的监控项。根据标签进行精确匹配，并根据运算符对标签进行区分大小写或不区分大小写搜索。格式： [{"tag": "<tag>", "value": "<value>", "operator": "<operator>"}, ...].空数组会返回所有监控项。可选操作类型：0 - (默认) Like（相似）；1 - Equal（相等）；2 - Not like（不相似）；3 - Not equal（不相等）；4 - Exists（存在）；5 - Not exists（不存在）。
 	*/
-	Tags []interface{}/* TODO */ `json:"tags,omitempty"`
+	Tags []*TagObject `json:"tags,omitempty"`
 
 	/**
 	  如果设置为 true ，则只返回在触发器中使用的监控项。
@@ -397,47 +397,47 @@ type ItemGetParam struct {
 	/**
 	  返回 主机 属性，其中包含监控项所属主机。
 	*/
-	SelectHosts map[string][]string `json:"selectHosts,omitempty"`
+	SelectHosts []string `json:"selectHosts,omitempty"`
 
 	/**
 	  返回 接口 属性，其中包含监控项所使用的主机接口。
 	*/
-	SelectInterfaces map[string][]string `json:"selectInterfaces,omitempty"`
+	SelectInterfaces []string `json:"selectInterfaces,omitempty"`
 
 	/**
 	  返回 触发器 属性，其中包含监控项所使用的触发器。支持 count 。
 	*/
-	SelectTriggers map[string][]string `json:"selectTriggers,omitempty"`
+	SelectTriggers []string `json:"selectTriggers,omitempty"`
 
 	/**
 	  返回 图表 属性，其中包含监控项所使用的图表。支持 count 。
 	*/
-	SelectGraphs map[string][]string `json:"selectGraphs,omitempty"`
+	SelectGraphs []string `json:"selectGraphs,omitempty"`
 
 	/**
 	  返回 发现规则 属性，其中包含用于创建监控项的 LLD 规则。
 	*/
-	SelectDiscoveryRule map[string][]string `json:"selectDiscoveryRule,omitempty"`
+	SelectDiscoveryRule []string `json:"selectDiscoveryRule,omitempty"`
 
 	/**
 	  返回 itemDiscovery 属性，其中包含监控项的发现对象。监控项发现对象将监控项链接到创建此监控项的监控项原型中。包含属性如下：itemdiscoveryid - (string) 监控项发现 ID ；itemid - (string) 已发现的监控项 ID ；parent_itemid - (string) 创建监控项的监控项原型的 ID ；key_ - (string) 监控项原型关键字；lastcheck - (timestamp) 监控项最后发现时间；ts_delete - (timestamp) 监控项不再被发现，将被删除的时间。
 	*/
-	SelectItemDiscovery map[string][]string `json:"selectItemDiscovery,omitempty"`
+	SelectItemDiscovery []string `json:"selectItemDiscovery,omitempty"`
 
 	/**
 	  返回 预处理 属性，其中包含监控项的预处理选项。包含属性如下：type - (string) 预处理选项类型：1 - Custom multiplier（自定义乘数）；2 - Right trim（移除右侧空白字符）；3 - Left trim（移除左侧空白字符）；4 - Trim（移除空白字符）；5 - Regular expression matching（正则表达式匹配）；6 - Boolean to decimal（布尔值转换十进制）；7 - Octal to decimal（八进制转换十进制）；8 - Hexadecimal to decimal（十六进制转十进制）；9 - Simple change（先前值到新值的基本变化）；10 - Change per second（每秒钟变化量）；11 - XML XPath（XML 解析）；12 - JSONPath（JSON解析）；13 - In range（生成序列）；14 - Matches regular expression（匹配正则表达式）；15 - Does not match regular expression（不匹配正则表达式）；16 - Check for error in JSON（检查 JSON 错误）；17 - Check for error in XML（检查 XML 错误）；18 - Check for error using regular expression（检查正则表达式使用错误）；19 - Discard unchanged（丢弃重复数据）；20 - Discard unchanged with heartbeat（设置心跳检查周期，丢弃重复数据）；21 - JavaScript（JS格式）；22 - Prometheus pattern（Prometheus 模板）；23 - Prometheus to JSON（Prometheus 转换 JSON）；24 - CSV to JSON（CSV 转换 JSON）；25 - Replace（替换）；26 - Check for not supported value（检查不支持的值）；27 - XML to JSON（XML 转换 JSON）。params - (string) 预处理选项使用的其他参数。多个参数由LF（\n）字符分隔。error_handler - (string) 预处理步骤失败时使用的操作类型：0 - Error message is set by Zabbix server（Zabbix 服务器自带错误消息）；1 - Discard value（丢弃值）；2 - Set custom value（设置自定义值）；3 - Set custom error message（设置自定义错误信息）。error_handler_params - (string) 错误处理器参数。
 	*/
-	SelectPreprocessing map[string][]string `json:"selectPreprocessing,omitempty"`
+	SelectPreprocessing []string `json:"selectPreprocessing,omitempty"`
 
 	/**
 	  返回 标签 属性，其中包含监控项的标签。
 	*/
-	SelectTags map[string][]string `json:"selectTags,omitempty"`
+	SelectTags []string `json:"selectTags,omitempty"`
 
 	/**
 	  返回 映射表 属性，其中包含监控项的映射表。
 	*/
-	SelectValueMap map[string][]string `json:"selectValueMap,omitempty"`
+	SelectValueMap []string `json:"selectValueMap,omitempty"`
 
 	/**
 	  限制子查询返回的记录数。适用以下子查询：selectGraphs - 按 name 对结果进行排序；selectTriggers - 按 description 对结果进行排序。
@@ -448,4 +448,27 @@ type ItemGetParam struct {
 	  按给定的属性对结果进行排序。可用值： itemid, name, key_, delay, history, trends, type 以及 status.
 	*/
 	Sortfield []string `json:"sortfield,omitempty"`
+}
+
+type PreprocessingObject struct {
+
+	/**
+	  预处理选项类型。可用值：1 - Custom multiplier（自定义乘数）；2 - Right trim（移除右侧空白字符）；3 - Left trim（移除左侧空白字符）；4 - Trim（移除空白字符）；5 - Regular expression matching（正则表达式匹配）；6 - Boolean to decimal（布尔值转换十进制）；7 - Octal to decimal（八进制转换十进制）；8 - Hexadecimal to decimal（十六进制转十进制）；9 - Simple change（先前值到新值的基本变化）；10 - Change per second（每秒钟变化量）；11 - XML XPath（XML 解析）；12 - JSONPath（JSON解析）；13 - In range（生成序列）；14 - Matches regular expression（匹配正则表达式）；15 - Does not match regular expression（不匹配正则表达式）；16 - Check for error in JSON（检查 JSON 错误）；17 - Check for error in XML（检查 XML 错误）；18 - Check for error using regular expression（检查正则表达式使用错误）；19 - Discard unchanged（丢弃重复数据）；20 - Discard unchanged with heartbeat（设置心跳检查周期，丢弃重复数据）；21 - JavaScript（JS格式）；22 - Prometheus pattern（Prometheus 模式）；23 - Prometheus to JSON（Prometheus 转换 JSON）；24 - CSV to JSON（CSV 转换 JSON）；25 - Replace（替换）；26 - Check unsupported（检查不支持的值）；27 - XML to JSON（XML 转换 JSON）。
+	*/
+	Type int64 `json:"type,omitempty"`
+
+	/**
+
+	 */
+	Params string `json:"params,omitempty"`
+
+	/**
+	  预处理步骤失败时使用的操作类型：可用值：0 - Error message is set by Zabbix server（Zabbix 服务器自带错误消息）；1 - Discard value（丢弃值）；2 - Set custom value（设置自定义值）；3 - Set custom error message（设置自定义错误信息）。
+	*/
+	ErrorHandler int64 `json:"error_handler,omitempty"`
+
+	/**
+	  错误处理器参数。与 error_handler 搭配使用。如果 error_handler 类型为 0 或 1，此值必须为空。如果 error_handler 类型为 2，此值可以为空。如果 error_handler 类型为 3，此值不能为空。
+	*/
+	ErrorHandlerParams string `json:"error_handler_params,omitempty"`
 }

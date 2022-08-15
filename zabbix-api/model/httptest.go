@@ -35,7 +35,7 @@ type HttpTest struct {
 	/**
 	  执行请求时将发送的HTTP请求头。
 	*/
-	Headers []interface{}/* TODO */ `json:"headers,omitempty"`
+	Headers HttpHeaderObject `json:"headers,omitempty"`
 
 	/**
 	  用于基本的HTTP或NTLM身份认证的密码。
@@ -90,7 +90,7 @@ type HttpTest struct {
 	/**
 	  Web场景变量。
 	*/
-	Variables []interface{}/* TODO */ `json:"variables,omitempty"`
+	Variables []*HttpHeaderObject `json:"variables,omitempty"`
 
 	/**
 	  是否验证SSL证书里指定的主机名与Web场景中使用的主机名匹配。可能的值：0 - (默认) 跳过主机验证；1 - 验证主机。
@@ -119,7 +119,7 @@ type HttpTestCreateParam struct {
 	/**
 	  Web场景tags。
 	*/
-	Tags []interface{}/* TODO */ `json:"tags,omitempty"`
+	Tags []*TagObject `json:"tags,omitempty"`
 }
 
 type HttpTestUpdateParam struct {
@@ -133,7 +133,7 @@ type HttpTestUpdateParam struct {
 	/**
 	  Web场景标签。
 	*/
-	Tags []interface{}/* TODO */ `json:"tags,omitempty"`
+	Tags []*TagObject `json:"tags,omitempty"`
 }
 
 type HttpTestGetParam struct {
@@ -192,22 +192,22 @@ type HttpTestGetParam struct {
 	/**
 	  仅返回给定标签的Web场景。根据标签进行精确匹配，并根据运算符值按标签值进行区分大小写或不区分大小写的搜索。格式：[{"tag": "<tag>", "value": "<value>", "operator": "<operator>"}, ...]。一个空数组返回所有的Web场景。可能的运算符类型：0 - (默认) Like；1 - Equal；2 - Not like；3 - Not equal；4 - Exists；5 - Not exists。
 	*/
-	Tags []interface{}/* TODO */ `json:"tags,omitempty"`
+	Tags []*TagObject `json:"tags,omitempty"`
 
 	/**
 	  在hosts属性中，以一个数组的方式返回Web场景所属的主机。
 	*/
-	SelectHosts map[string][]string `json:"selectHosts,omitempty"`
+	SelectHosts []string `json:"selectHosts,omitempty"`
 
 	/**
 	  在steps属性中返回Web场景步骤。支持count。
 	*/
-	SelectSteps map[string][]string `json:"selectSteps,omitempty"`
+	SelectSteps []string `json:"selectSteps,omitempty"`
 
 	/**
 	  在tags属性中返回Web场景标签。
 	*/
-	SelectTags map[string][]string `json:"selectTags,omitempty"`
+	SelectTags []string `json:"selectTags,omitempty"`
 
 	/**
 	  按照给定属性对结果进行排序。可能的值：httptestid和name。

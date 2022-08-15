@@ -135,7 +135,7 @@ type MediaType struct {
 	/**
 	  webhook 输入参数的数组。
 	*/
-	Parameters []interface{}/* TODO */ `json:"parameters,omitempty"`
+	Parameters ParameterObject `json:"parameters,omitempty"`
 
 	/**
 	  媒介类型描述。
@@ -149,12 +149,12 @@ type MediaTypeCreateParam struct {
 	/**
 	  要为媒体类型创建的 Webhook 参数 。
 	*/
-	Parameters []interface{}/* TODO */ `json:"parameters,omitempty"`
+	Parameters ParameterObject `json:"parameters,omitempty"`
 
 	/**
 	  为媒体类型创建的消息模板 。
 	*/
-	MessageTemplates []interface{}/* TODO */ `json:"message_templates,omitempty"`
+	MessageTemplates MessageTemplateObject `json:"message_templates,omitempty"`
 }
 
 type MediaTypeUpdateParam struct {
@@ -163,12 +163,12 @@ type MediaTypeUpdateParam struct {
 	/**
 	  Webhook 参数 用于替换当前的 webhook 参数。
 	*/
-	Parameters []interface{}/* TODO */ `json:"parameters,omitempty"`
+	Parameters ParameterObject `json:"parameters,omitempty"`
 
 	/**
 	  消息模板 用于替换当前的消息模板。
 	*/
-	MessageTemplates []interface{}/* TODO */ `json:"message_templates,omitempty"`
+	MessageTemplates MessageTemplateObject `json:"message_templates,omitempty"`
 }
 
 type MediaTypeGetParam struct {
@@ -192,15 +192,38 @@ type MediaTypeGetParam struct {
 	/**
 	  返回一个包含消息模板消息数组的属性。
 	*/
-	SelectMessageTemplates map[string][]string `json:"selectMessageTemplates,omitempty"`
+	SelectMessageTemplates []string `json:"selectMessageTemplates,omitempty"`
 
 	/**
 	  返回使用媒介类型的用户属性。
 	*/
-	SelectUsers map[string][]string `json:"selectUsers,omitempty"`
+	SelectUsers []string `json:"selectUsers,omitempty"`
 
 	/**
 	  按给定属性对结果进行排序。可用值：mediatypeid。
 	*/
 	Sortfield []string `json:"sortfield,omitempty"`
+}
+
+type MessageTemplateObject struct {
+
+	/**
+	  事件源。可用值：0 - 触发器；1 - 自动发现；2 - 自动注册；3 - 采集器；4 - 服务端。
+	*/
+	Eventsource int64 `json:"eventsource,omitempty"`
+
+	/**
+	  操作模式。可用值：0 - 自动操作；1 - 恢复操作；2 - 更新操作。
+	*/
+	Recovery int64 `json:"recovery,omitempty"`
+
+	/**
+	  消息主题。
+	*/
+	Subject string `json:"subject,omitempty"`
+
+	/**
+	  消息文本。
+	*/
+	Message string `json:"message,omitempty"`
 }

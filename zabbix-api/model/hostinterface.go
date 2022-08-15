@@ -10,7 +10,7 @@ type HostInterface struct {
 	/**
 	  接口的附加对象。 如果接口 'type'是SNMP，则必选
 	*/
-	Details []interface{}/* TODO */ `json:"details,omitempty"`
+	Details InterfaceDetail `json:"details,omitempty"`
 
 	/**
 	  (只读) 不可用主机接口的下一次轮询时间。
@@ -102,12 +102,12 @@ type HostInterfaceGetParam struct {
 	/**
 	  返回监控项 属性。其中包括使用该接口的监控项支持 count.
 	*/
-	SelectItems map[string][]string `json:"selectItems,omitempty"`
+	SelectItems []string `json:"selectItems,omitempty"`
 
 	/**
 	  返回 主机属性，其中包括使用该接口的主机数组。
 	*/
-	SelectHosts map[string][]string `json:"selectHosts,omitempty"`
+	SelectHosts []string `json:"selectHosts,omitempty"`
 
 	/**
 	  限制子选择返回的记录数适用于以下子选择:selectItems。
@@ -123,4 +123,57 @@ type HostInterfaceGetParam struct {
 
 	 */
 	Nodeids []string `json:"nodeids,omitempty"`
+}
+
+type InterfaceDetail struct {
+
+	/**
+	  SNMP接口版本。可能的值有:1 - SNMPv1;2 - SNMPv2c;3 - SNMPv3
+	*/
+	Version int64 `json:"version,omitempty"`
+
+	/**
+	  是否使用批量的SNMP请求.可能的值有:0 - 不使用批量请求;1 - (默认) - 使用批量请求。
+	*/
+	Bulk int64 `json:"bulk,omitempty"`
+
+	/**
+	  SNMP 团体字 (必选)。 仅在SNMPv1和SNMPv2接口中使用。
+	*/
+	Community string `json:"community,omitempty"`
+
+	/**
+	  SNMPv3 安全名称。仅在SNMPv3接口中使用。
+	*/
+	Securityname string `json:"securityname,omitempty"`
+
+	/**
+	  SNMPv3安全级别。 仅在SNMPv3接口中使用。可能的值有:0 - (默认) - noAuthNoPriv;1 - authNoPriv;2 - authPriv.
+	*/
+	Securitylevel string `json:"securitylevel,omitempty"`
+
+	/**
+	  SNMPv3身份验证密码。仅在SNMPv3接口中使用。
+	*/
+	Authpassphrase string `json:"authpassphrase,omitempty"`
+
+	/**
+	  SNMPv3隐私密码。仅在SNMPv3接口中使用。
+	*/
+	Privpassphrase string `json:"privpassphrase,omitempty"`
+
+	/**
+	  SNMPv3身份认证协议。仅在SNMPv3接口中使用。可能的值有:0 - (默认) - MD5;1 - SHA1;2 - SHA224;3 - SHA256;4 - SHA384;5 - SHA512.
+	*/
+	Authprotocol int64 `json:"authprotocol,omitempty"`
+
+	/**
+	  SNMPv3隐私协议。仅在SNMPv3接口中使用。可能的值有:0 - (默认) - DES;1 - AES128;2 - AES192;3 - AES256;4 - AES192C;5 - AES256C.
+	*/
+	Privprotocol int64 `json:"privprotocol,omitempty"`
+
+	/**
+	  SNMPv3上下文名称。仅在SNMPv3接口中使用。
+	*/
+	Contextname string `json:"contextname,omitempty"`
 }

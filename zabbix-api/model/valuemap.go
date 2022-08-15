@@ -20,7 +20,7 @@ type ValueMap struct {
 	/**
 	  当前值映射的值映射关系。映射对象 described in detail below。
 	*/
-	Mappings []interface{}/* TODO */ `json:"mappings,omitempty"`
+	Mappings []*ValueMapMappingObject `json:"mappings,omitempty"`
 
 	/**
 	  通用唯一标识，用于将引入的值映射关联已经存在的对象。仅用于模板上的值映射。如果没有提供，则自动生成。用于更新操作，这个字段是只读。
@@ -47,7 +47,7 @@ type ValueMapGetParam struct {
 	/**
 	  返回 mappings 属性中当前值映射的值映射关系。支持count。
 	*/
-	SelectMappings map[string][]string `json:"selectMappings,omitempty"`
+	SelectMappings []string `json:"selectMappings,omitempty"`
 
 	/**
 	  按照给定的属性对结果进行排序。可用值： valuemapid，name。

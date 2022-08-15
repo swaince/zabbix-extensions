@@ -317,47 +317,47 @@ type DiscoverRoleGetParam struct {
 	/**
 	  返回一个 filter 属性，其中包含 LLD 规则使用的过滤器的数据。
 	*/
-	SelectFilter map[string][]string `json:"selectFilter,omitempty"`
+	SelectFilter []string `json:"selectFilter,omitempty"`
 
 	/**
 	  返回具有属于 LLD 规则的图形原型的 graphs 属性。支持count。
 	*/
-	SelectGraphs map[string][]string `json:"selectGraphs,omitempty"`
+	SelectGraphs []string `json:"selectGraphs,omitempty"`
 
 	/**
 	  返回具有属于 LLD 规则的主机原型的 hostPrototypes 属性。支持count。
 	*/
-	SelectHostPrototypes map[string][]string `json:"selectHostPrototypes,omitempty"`
+	SelectHostPrototypes []string `json:"selectHostPrototypes,omitempty"`
 
 	/**
 	  返回一个 hosts 属性，其中包含 LLD 规则所属的主机数组。
 	*/
-	SelectHosts map[string][]string `json:"selectHosts,omitempty"`
+	SelectHosts []string `json:"selectHosts,omitempty"`
 
 	/**
 	  返回一个 items 属性，其中包含属于 LLD 规则的项目原型。支持 count。
 	*/
-	SelectItems map[string][]string `json:"selectItems,omitempty"`
+	SelectItems []string `json:"selectItems,omitempty"`
 
 	/**
 	  返回带有属于 LLD 规则的触发器原型的 triggers 属性。支持count。
 	*/
-	SelectTriggers map[string][]string `json:"selectTriggers,omitempty"`
+	SelectTriggers []string `json:"selectTriggers,omitempty"`
 
 	/**
 	  返回一个 lld_macro_paths 属性，其中包含 LLD 宏列表和分配给每个相应宏的值的路径。
 	*/
-	SelectLLDMacroPaths map[string][]string `json:"selectLLDMacroPaths,omitempty"`
+	SelectLLDMacroPaths []string `json:"selectLLDMacroPaths,omitempty"`
 
 	/**
 	  返回带有 LLD 规则预处理选项的 preprocessing 属性。它具有以下属性：type - (string) 预处理选项类型：5 - 正则表达式匹配；11 - XML XPath；12 - JSONPath；15 - 不匹配正则表达式；16 - 检查 JSON 中的错误；17 - 检查错误在 XML 中；20 - 丢弃未更改的心跳；23 - Prometheus 到 JSON；24 - CSV 到 JSON；25 - 替换；27 - XML 到 JSON。 params - (string) 预处理选项使用的附加参数。多个参数由 LF (\n) 字符分隔。error_handler - (string) 预处理步骤失败时使用的操作类型：0 - Zabbix 服务器设置错误消息；<br >1 - 丢弃值；2 - 设置自定义值；3 - 设置自定义错误消息。error_handler_params - (string) 错误处理程序参数。
 	*/
-	SelectPreprocessing map[string][]string `json:"selectPreprocessing,omitempty"`
+	SelectPreprocessing []string `json:"selectPreprocessing,omitempty"`
 
 	/**
 	  返回一个 lld_rule_overrides 属性，其中包含在原型对象上执行的覆盖过滤器、条件和操作的列表。
 	*/
-	SelectOverrides map[string][]string `json:"selectOverrides,omitempty"`
+	SelectOverrides []string `json:"selectOverrides,omitempty"`
 
 	/**
 	  限制子选择返回的记录数。适用于以下子选择：selctItems；selectGraphs；selectTriggers。

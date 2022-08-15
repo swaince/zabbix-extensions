@@ -119,12 +119,12 @@ type TriggerCreateParam struct {
 	/**
 	  目的触发器.目的触发器必须存在且已定义triggerid属性.
 	*/
-	Dependencies []interface{}/* TODO */ `json:"dependencies,omitempty"`
+	Dependencies []*Trigger `json:"dependencies,omitempty"`
 
 	/**
 	  触发器标签 标签.
 	*/
-	Tags []interface{}/* TODO */ `json:"tags,omitempty"`
+	Tags []*TagObject `json:"tags,omitempty"`
 }
 
 type TriggerUpdateParam struct {
@@ -133,12 +133,12 @@ type TriggerUpdateParam struct {
 	/**
 	  依赖触发的触发器.触发器必须已定义triggerid属性.
 	*/
-	Dependencies []interface{}/* TODO */ `json:"dependencies,omitempty"`
+	Dependencies []*Trigger `json:"dependencies,omitempty"`
 
 	/**
 	  触发器 标签.
 	*/
-	Tags []interface{}/* TODO */ `json:"tags,omitempty"`
+	Tags []*TagObject `json:"tags,omitempty"`
 }
 
 type TriggerGetParam struct {
@@ -262,7 +262,7 @@ type TriggerGetParam struct {
 	/**
 	  只返回给定标签的触发器。按标签精确匹配，根据运算符值按标签值进行区分大小写或不区分大小写的搜索.格式: [{"tag": "<tag>", "value": "<value>", "operator": "<operator>"}, ...].空数组返回所有触发器.可能的运算符类型:0 - (默认) Like;1 - Equal;2 - Not like;3 - Not equal4 - Exists;5 - Not exists.
 	*/
-	Tags []interface{}/* TODO */ `json:"tags,omitempty"`
+	Tags []*TagObject `json:"tags,omitempty"`
 
 	/**
 	  在触发器描述中展开宏.
@@ -282,47 +282,47 @@ type TriggerGetParam struct {
 	/**
 	  在组 属性中返回触发器所属的主机组.
 	*/
-	SelectGroups map[string][]string `json:"selectGroups,omitempty"`
+	SelectGroups []string `json:"selectGroups,omitempty"`
 
 	/**
 	  返回触发器所属的 主机.
 	*/
-	SelectHosts map[string][]string `json:"selectHosts,omitempty"`
+	SelectHosts []string `json:"selectHosts,omitempty"`
 
 	/**
 	  返回触发器包含的 监控项.
 	*/
-	SelectItems map[string][]string `json:"selectItems,omitempty"`
+	SelectItems []string `json:"selectItems,omitempty"`
 
 	/**
 	  在 functions 属性中返回触发器中使用的函数.函数对象表示触发器表达式中使用的函数，并具有以下属性:functionid - (string) 函数的ID;itemid - (string) 函数中使用的监控项 ID;function - (string) 函数的名称;parameter - (string) 传递给函数的参数。查询参数被返回字符串中的$符号替换.
 	*/
-	SelectFunctions map[string][]string `json:"selectFunctions,omitempty"`
+	SelectFunctions []string `json:"selectFunctions,omitempty"`
 
 	/**
 	  返回在dependencies 属性中依赖触发的触发器.
 	*/
-	SelectDependencies map[string][]string `json:"selectDependencies,omitempty"`
+	SelectDependencies []string `json:"selectDependencies,omitempty"`
 
 	/**
 	  返回创建触发器的 低级发现规则.
 	*/
-	SelectDiscoveryRule map[string][]string `json:"selectDiscoveryRule,omitempty"`
+	SelectDiscoveryRule []string `json:"selectDiscoveryRule,omitempty"`
 
 	/**
 	  在 最新事件 属性中返回最后一个重要的触发事件.
 	*/
-	SelectLastEvent map[string][]string `json:"selectLastEvent,omitempty"`
+	SelectLastEvent []string `json:"selectLastEvent,omitempty"`
 
 	/**
 	  在标签 属性中返回触发标签.
 	*/
-	SelectTags map[string][]string `json:"selectTags,omitempty"`
+	SelectTags []string `json:"selectTags,omitempty"`
 
 	/**
 	  在 triggerDiscovery 属性中返回触发器发现对象. 触发器发现对象将触发器链接到创建它的触发器原型.它具有以下属性:parent_triggerid - (string) 创建触发器的触发器原型的 ID.
 	*/
-	SelectTriggerDiscovery map[string][]string `json:"selectTriggerDiscovery,omitempty"`
+	SelectTriggerDiscovery []string `json:"selectTriggerDiscovery,omitempty"`
 
 	/**
 	  限制子查询返回的记录数量.适用于以下子查询:selectHosts - 结果将按host排序.

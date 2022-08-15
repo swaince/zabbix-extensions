@@ -109,7 +109,7 @@ type GraphCreateParam struct {
 	/**
 	  要为图表创建的图表监控项。
 	*/
-	Gitems []interface{}/* TODO */ `json:"gitems,omitempty"`
+	Gitems []*GraphItem `json:"gitems,omitempty"`
 }
 
 type GraphUpdateParam struct {
@@ -118,7 +118,7 @@ type GraphUpdateParam struct {
 	/**
 	  图表监控项来替换现有的图表监控项。如果一个图表监控项有定义gitemid属性，它将被更新，否则将创建一个新的图表监控项。
 	*/
-	Gitems []interface{}/* TODO */ `json:"gitems,omitempty"`
+	Gitems []*GraphItem `json:"gitems,omitempty"`
 }
 
 type GraphGetParam struct {
@@ -167,37 +167,37 @@ type GraphGetParam struct {
 	/**
 	  返回一个组属性，其中包含该图表所属的主机组。
 	*/
-	SelectGroups map[string][]string `json:"selectGroups,omitempty"`
+	SelectGroups []string `json:"selectGroups,omitempty"`
 
 	/**
 	  返回一个模板属性，其中包含该图表所属的模板。
 	*/
-	SelectTemplates map[string][]string `json:"selectTemplates,omitempty"`
+	SelectTemplates []string `json:"selectTemplates,omitempty"`
 
 	/**
 	  返回一个主机属性，其中包含该图表所属的主机。
 	*/
-	SelectHosts map[string][]string `json:"selectHosts,omitempty"`
+	SelectHosts []string `json:"selectHosts,omitempty"`
 
 	/**
 	  返回一个监控项属性，其中包含该图表中使用的监控项。
 	*/
-	SelectItems map[string][]string `json:"selectItems,omitempty"`
+	SelectItems []string `json:"selectItems,omitempty"`
 
 	/**
 	  返回一个 graphDiscovery 属性和图表发现对象。图表发现对象将图表和创建图标的原型联系起来。它具有以下属性：graphid - (string) 图表的ID；parent_graphid - (string) 创建图表的图表原型的ID。
 	*/
-	SelectGraphDiscovery map[string][]string `json:"selectGraphDiscovery,omitempty"`
+	SelectGraphDiscovery []string `json:"selectGraphDiscovery,omitempty"`
 
 	/**
 	  返回一个图表监控项属性，其中包含该图表中使用的监控项。
 	*/
-	SelectGraphItems map[string][]string `json:"selectGraphItems,omitempty"`
+	SelectGraphItems []string `json:"selectGraphItems,omitempty"`
 
 	/**
 	  返回一个发现规则属性，其中包含创建该图表的低级发现规则。
 	*/
-	SelectDiscoveryRule map[string][]string `json:"selectDiscoveryRule,omitempty"`
+	SelectDiscoveryRule []string `json:"selectDiscoveryRule,omitempty"`
 
 	/**
 	  按给定的属性对结果进行排序。可用值： graphid, name 和 graphtype。

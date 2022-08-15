@@ -75,7 +75,7 @@ type ItemPrototype struct {
 	/**
 	  HTTP客户端监控现原型字段。 HTTP（S）请求头的对象，其中，头部名称用作键，头部值用作值.案例:{ "User-Agent": "Zabbix" }
 	*/
-	Headers interface{}/* TODO */ `json:"headers,omitempty"`
+	Headers HttpHeaderObject `json:"headers,omitempty"`
 
 	/**
 	  历史数据的可存储时间。可接受用户宏和LLD宏。默认值: 90d.
@@ -120,7 +120,7 @@ type ItemPrototype struct {
 	/**
 	  脚本监控项原型的其他参数。具有“名称”和“值”属性的对象数组，其中名称必须唯一。
 	*/
-	Parameters []interface{}/* TODO */ `json:"parameters,omitempty"`
+	Parameters ParameterObject `json:"parameters,omitempty"`
 
 	/**
 	  验证密码。用于简单检查、SSH、Telnet、数据库监控项、JMX和HTTP客户端监控项原型。
@@ -150,7 +150,7 @@ type ItemPrototype struct {
 	/**
 	  HTTP客户端监控现原型字段。 查询参数。具有“键”：“值”对的对象数组，其中值可以是空字符串。
 	*/
-	QueryFields []interface{}/* TODO */ `json:"query_fields,omitempty"`
+	QueryFields QueryFieldObject `json:"query_fields,omitempty"`
 
 	/**
 	  HTTP客户端监控现原型字段。请求方法的类型。0 - (默认值) GET1 - POST2 - PUT3 - HEAD
@@ -259,12 +259,12 @@ type ItemPrototypeCreateParam struct {
 	/**
 	  监控项原型预处理 选项。
 	*/
-	Preprocessing []interface{}/* TODO */ `json:"preprocessing,omitempty"`
+	Preprocessing []*PreprocessingObject `json:"preprocessing,omitempty"`
 
 	/**
 	  监控项原型标签。
 	*/
-	Tags []interface{}/* TODO */ `json:"tags,omitempty"`
+	Tags []*TagObject `json:"tags,omitempty"`
 }
 
 type ItemPrototypeUpdateParam struct {
@@ -278,7 +278,7 @@ type ItemPrototypeUpdateParam struct {
 	/**
 	  要替换的当前监控项预处理选项。
 	*/
-	Preprocessing []interface{}/* TODO */ `json:"preprocessing,omitempty"`
+	Preprocessing []*PreprocessingObject `json:"preprocessing,omitempty"`
 }
 
 type ItemPrototypeGetParam struct {
@@ -332,37 +332,37 @@ type ItemPrototypeGetParam struct {
 	/**
 	  返回带有监控项原型所属的低级发现规则的 discoveryRule 属性。
 	*/
-	SelectDiscoveryRule map[string][]string `json:"selectDiscoveryRule,omitempty"`
+	SelectDiscoveryRule []string `json:"selectDiscoveryRule,omitempty"`
 
 	/**
 	  返回一个 manual/api/reference/graphprototype/object#graph_prototype 属性，其中包含使用监控项原型的图形原型。< br>支持count。
 	*/
-	SelectGraphs map[string][]string `json:"selectGraphs,omitempty"`
+	SelectGraphs []string `json:"selectGraphs,omitempty"`
 
 	/**
 	  返回一个 hosts 属性，其中包含监控项原型所属的主机数组。
 	*/
-	SelectHosts map[string][]string `json:"selectHosts,omitempty"`
+	SelectHosts []string `json:"selectHosts,omitempty"`
 
 	/**
 	  返回 tags 属性中的监控项原型标签。
 	*/
-	SelectTags map[string][]string `json:"selectTags,omitempty"`
+	SelectTags []string `json:"selectTags,omitempty"`
 
 	/**
 	  返回一个 triggers 属性，其中包含使用监控项原型的触发器原型。支持count。
 	*/
-	SelectTriggers map[string][]string `json:"selectTriggers,omitempty"`
+	SelectTriggers []string `json:"selectTriggers,omitempty"`
 
 	/**
 	  返回带有监控项预处理选项的 preprocessing 属性。它具有以下属性：type - (string) 预处理选项类型：1 - 自定义乘数;2 - 右修剪;3 - 左修剪;4 - 修剪;5 - 正则表达式匹配;< br>6 - 布尔到十进制；7 - 八进制到十进制；8 - 十六进制到十进制；9 - 简单更改；10 - 每秒更改；11 - XML XPath ;12 - JSONPath;13 - 在范围内;14 - 匹配正则表达式;15 - 不匹配正则表达式;16 - 检查 JSON 中的错误; 17 - 检查 XML 中的错误；18 - 使用正则表达式检查错误；19 - 丢弃未更改；20 - 丢弃未更改的心跳；21 - JavaScript；22 - Prometheus 模式；23 - Prometheus 到 JSON；24 - CSV 到 JSON；25 - 替换；26 - 检查不支持的值；27- XML 到 JSON。<br >params - (str ing) 预处理选项使用的附加参数。多个参数由 LF (\n) 字符分隔。error_handler - (string) 预处理步骤失败时使用的操作类型：0 - Zabbix 服务器设置错误消息；<br >1 - 丢弃值；2 - 设置自定义值；3 - 设置自定义错误消息。error_handler_params - (string) 错误处理程序参数。
 	*/
-	SelectPreprocessing map[string][]string `json:"selectPreprocessing,omitempty"`
+	SelectPreprocessing []string `json:"selectPreprocessing,omitempty"`
 
 	/**
 	  返回带有监控项原型值映射的 valuemap 属性。
 	*/
-	SelectValueMap map[string][]string `json:"selectValueMap,omitempty"`
+	SelectValueMap []string `json:"selectValueMap,omitempty"`
 
 	/**
 	  限制子选择返回的记录数。适用于以下子选择：selectGraphs - 结果将按name排序；selectTriggers - 结果将按“描述”排序。

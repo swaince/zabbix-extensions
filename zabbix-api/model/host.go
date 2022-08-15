@@ -119,27 +119,27 @@ type HostCreateParam struct {
 	/**
 	  把主机添加到目标组。 主机组必须已定义 groupid 属性。
 	*/
-	Groups []interface{}/* TODO */ `json:"groups,omitempty"`
+	Groups []*HostGroup `json:"groups,omitempty"`
 
 	/**
 	  为主机创建的接口。
 	*/
-	Interfaces []interface{}/* TODO */ `json:"interfaces,omitempty"`
+	Interfaces []*HostInterface `json:"interfaces,omitempty"`
 
 	/**
 	  主机标签。
 	*/
-	Tags []interface{}/* TODO */ `json:"tags,omitempty"`
+	Tags []*TagObject `json:"tags,omitempty"`
 
 	/**
 	  主机连接的模板。模板必须已定义templateid属性。
 	*/
-	Templates []interface{}/* TODO */ `json:"templates,omitempty"`
+	Templates []*Template `json:"templates,omitempty"`
 
 	/**
 	  为主机创建的用户宏。
 	*/
-	Macros []interface{}/* TODO */ `json:"macros,omitempty"`
+	Macros []*Macro `json:"macros,omitempty"`
 
 	/**
 	  主机资产清单属性。
@@ -153,17 +153,17 @@ type HostUpdateParam struct {
 	/**
 	  更换主机所属的主机组。主机组必须已定义 groupid 属性。所有未在请求中列出的主机组将被解除链接。
 	*/
-	Groups []interface{}/* TODO */ `json:"groups,omitempty"`
+	Groups []*HostGroup `json:"groups,omitempty"`
 
 	/**
 	  主机接口用于替换当前主机接口。 所有未在请求中列出的接口将被删除。
 	*/
-	Interfaces []interface{}/* TODO */ `json:"interfaces,omitempty"`
+	Interfaces []*HostInterface `json:"interfaces,omitempty"`
 
 	/**
 	  主机标签替换当前主机标签。所有未在请求中列出的标签将被删除。
 	*/
-	Tags []interface{}/* TODO */ `json:"tags,omitempty"`
+	Tags []*TagObject `json:"tags,omitempty"`
 
 	/**
 	  主机清单属性。
@@ -173,17 +173,17 @@ type HostUpdateParam struct {
 	/**
 	  用户宏替换当前用户宏。所有未在请求中列出的宏将被删除。
 	*/
-	Macros []interface{}/* TODO */ `json:"macros,omitempty"`
+	Macros []*Macro `json:"macros,omitempty"`
 
 	/**
 	  模板替换当前链接的模板。所有未在请求中列出的模板只会被解除链接。模板必须定义了 templateid 属性。
 	*/
-	Templates []interface{}/* TODO */ `json:"templates,omitempty"`
+	Templates []*Template `json:"templates,omitempty"`
 
 	/**
 	  模板取消与主机的链接并清除。模板必须定义了 templateid 属性。
 	*/
-	TemplatesClear []interface{}/* TODO */ `json:"templates_clear,omitempty"`
+	TemplatesClear []*Template `json:"templates_clear,omitempty"`
 }
 
 type HostGetParam struct {
@@ -332,7 +332,7 @@ type HostGetParam struct {
 	/**
 	  只返回带有给定标签的主机。根据标记精确匹配，根据标记值进行大小写敏感或不区分大小写的搜索，具体取决于操作符值。格式: [{"tag": "<tag>", "value": "<value>", "operator": "<operator>"}, ...].空数组返回所有主机。可能的操作符值:0 - (默认) 包含;1 - 登录;2 - 不类似;3 - 不等于4 - 存在;5 - 不存在。
 	*/
-	Tags []interface{}/* TODO */ `json:"tags,omitempty"`
+	Tags []*TagObject `json:"tags,omitempty"`
 
 	/**
 	  返回那些在所有链接模板中也给出了 tags 的主机。 默认:可能的值:true - 链接模板也必须有tags;false - (默认) 链接的模板标签将被忽略。
@@ -342,82 +342,82 @@ type HostGetParam struct {
 	/**
 	  返回 发现 属性和主机低级发现规则。支持 count.
 	*/
-	SelectDiscoveries map[string][]string `json:"selectDiscoveries,omitempty"`
+	SelectDiscoveries []string `json:"selectDiscoveries,omitempty"`
 
 	/**
 	  返回 发现规则 属性和创建主机的底层发现规则(来自VMware监控中的主机原型)。
 	*/
-	SelectDiscoveryRule map[string][]string `json:"selectDiscoveryRule,omitempty"`
+	SelectDiscoveryRule []string `json:"selectDiscoveryRule,omitempty"`
 
 	/**
 	  返回 图形 属性和主机图。支持 count.
 	*/
-	SelectGraphs map[string][]string `json:"selectGraphs,omitempty"`
+	SelectGraphs []string `json:"selectGraphs,omitempty"`
 
 	/**
 	  返回 主机组 属性和主机所属的主机组数据。
 	*/
-	SelectGroups map[string][]string `json:"selectGroups,omitempty"`
+	SelectGroups []string `json:"selectGroups,omitempty"`
 
 	/**
 	  返回 hostDiscovery 属性和主机发现对象数据。主机发现对象将发现的主机链接到主机原型，或将主机原型链接到LLD规则，并具有以下属性:host - (string) 主机原型的主机;hostid - (string) 发现的主机或主机原型ID;parent_hostid - (string) 创建主机的主机原型ID;parent_itemid - (string) 发现主机的LLD规则ID;lastcheck - (timestamp) 最后发现主机的时间;ts_delete - (timestamp) 删除已发现主机的时间。
 	*/
-	SelectHostDiscovery map[string][]string `json:"selectHostDiscovery,omitempty"`
+	SelectHostDiscovery []string `json:"selectHostDiscovery,omitempty"`
 
 	/**
 	  返回 httpTests 属性与主机web场景.支持 count.
 	*/
-	SelectHttpTests map[string][]string `json:"selectHttpTests,omitempty"`
+	SelectHttpTests []string `json:"selectHttpTests,omitempty"`
 
 	/**
 	  返回 interfaces 属性和主机接口Supports count。
 	*/
-	SelectInterfaces map[string][]string `json:"selectInterfaces,omitempty"`
+	SelectInterfaces []string `json:"selectInterfaces,omitempty"`
 
 	/**
 	  返回 inventory 属性和主机库存数据。
 	*/
-	SelectInventory map[string][]string `json:"selectInventory,omitempty"`
+	SelectInventory []string `json:"selectInventory,omitempty"`
 
 	/**
 	  返回 items 属性和主机项。支持 count.
 	*/
-	SelectItems map[string][]string `json:"selectItems,omitempty"`
+	SelectItems []string `json:"selectItems,omitempty"`
 
 	/**
 	  返回 macros 属性和主机宏。
 	*/
-	SelectMacros map[string][]string `json:"selectMacros,omitempty"`
+	SelectMacros []string `json:"selectMacros,omitempty"`
 
 	/**
 	  返回 parentTemplates 属性和主机链接到的模板。支持 count.
 	*/
-	SelectParentTemplates map[string][]string `json:"selectParentTemplates,omitempty"`
+	SelectParentTemplates []string `json:"selectParentTemplates,omitempty"`
 
 	/**
 	  返回 dashboards 属性.支持 count.
 	*/
-	SelectDashboards map[string][]string `json:"selectDashboards,omitempty"`
+	SelectDashboards []string `json:"selectDashboards,omitempty"`
 
 	/**
 	  返回 tags 属性和主机标记。
 	*/
-	SelectTags map[string][]string `json:"selectTags,omitempty"`
+	SelectTags []string `json:"selectTags,omitempty"`
 
 	/**
 	  返回 inheritedTags 属性的标记，这些标记位于链接到主机的所有模板上。
 	*/
-	SelectInheritedTags map[string][]string `json:"selectInheritedTags,omitempty"`
+	SelectInheritedTags []string `json:"selectInheritedTags,omitempty"`
 
 	/**
 	  返回 triggers 属性和主机触发器。支持 count.
 	*/
-	SelectTriggers map[string][]string `json:"selectTriggers,omitempty"`
+	SelectTriggers []string `json:"selectTriggers,omitempty"`
 
 	/**
 	  返回 valuemaps 属性和主机映射值。
 	*/
-	SelectValueMaps map[string][]string `json:"selectValueMaps,omitempty"`
+	SelectValueMaps []string `json:"selectValueMaps,omitempty"`
 
 	/**
 	  限制子选择返回的记录数量。适用于以下子选择:selectParentTemplates - 结果将按 host 排序;selectInterfaces;selectItems - 结果将按 name 排序;selectDiscoveries - 结果将按 name 排序;selectTriggers - 结果将按 description 排序;selectGraphs - 结果将按 name 排序;selectDashboards - 结果将按 name 排序。
@@ -427,7 +427,7 @@ type HostGetParam struct {
 	/**
 	  只返回库存数据与给定通配符搜索匹配的主机。该参数受与 search 相同的附加参数的影响。
 	*/
-	SearchInventory interface{}/* TODO */ `json:"searchInventory,omitempty"`
+	SearchInventory []string `json:"searchInventory,omitempty"`
 
 	/**
 	  根据给定的属性对结果进行排序。可能的值: hostid, host, name, status.

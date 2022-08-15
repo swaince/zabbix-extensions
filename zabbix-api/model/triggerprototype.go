@@ -99,12 +99,12 @@ type TriggerPrototypeCreateParam struct {
 	/**
 	  触发器原型所依赖的触发器和触发器原型.触发器必须已定义triggerid属性.
 	*/
-	Dependencies []interface{}/* TODO */ `json:"dependencies,omitempty"`
+	Dependencies []*Trigger `json:"dependencies,omitempty"`
 
 	/**
 	  触发器 标签.
 	*/
-	Tags []interface{}/* TODO */ `json:"tags,omitempty"`
+	Tags []*TagObject `json:"tags,omitempty"`
 }
 
 type TriggerPrototypeUpdateParam struct {
@@ -113,12 +113,12 @@ type TriggerPrototypeUpdateParam struct {
 	/**
 	  触发器原型所依赖的触发器和触发器原型.触发器必须已定义triggerid属性..
 	*/
-	Dependencies []interface{}/* TODO */ `json:"dependencies,omitempty"`
+	Dependencies []*Trigger `json:"dependencies,omitempty"`
 
 	/**
 	  触发器原型 标签.
 	*/
-	Tags []interface{}/* TODO */ `json:"tags,omitempty"`
+	Tags []*TagObject `json:"tags,omitempty"`
 }
 
 type TriggerPrototypeGetParam struct {
@@ -202,37 +202,37 @@ type TriggerPrototypeGetParam struct {
 	/**
 	  在 dependencies 属性中返回触发器原型和触发器原型所依赖的触发器.
 	*/
-	SelectDependencies map[string][]string `json:"selectDependencies,omitempty"`
+	SelectDependencies []string `json:"selectDependencies,omitempty"`
 
 	/**
 	  返回触发器原型所属的 低级别发现规则 .
 	*/
-	SelectDiscoveryRule map[string][]string `json:"selectDiscoveryRule,omitempty"`
+	SelectDiscoveryRule []string `json:"selectDiscoveryRule,omitempty"`
 
 	/**
 	  在 functions 属性中返回触发器原型中使用的函数.函数对象表示触发器表达式中使用的函数，并具有以下属性:functionid - (string) 函数的ID;itemid - (string) 在函数中使用的监控项ID;function - (string) 函数名称;parameter - (string) 传递给函数的参数，查询参数被返回字符串中的 $ 符号替换.
 	*/
-	SelectFunctions map[string][]string `json:"selectFunctions,omitempty"`
+	SelectFunctions []string `json:"selectFunctions,omitempty"`
 
 	/**
 	  在 组 属性中返回触发器原型所属的主机组.
 	*/
-	SelectGroups map[string][]string `json:"selectGroups,omitempty"`
+	SelectGroups []string `json:"selectGroups,omitempty"`
 
 	/**
 	  在 主机 属性中返回触发器原型所属的主机.
 	*/
-	SelectHosts map[string][]string `json:"selectHosts,omitempty"`
+	SelectHosts []string `json:"selectHosts,omitempty"`
 
 	/**
 	  返回项目和项目原型使用 监控项 属性中的触发器原型.
 	*/
-	SelectItems map[string][]string `json:"selectItems,omitempty"`
+	SelectItems []string `json:"selectItems,omitempty"`
 
 	/**
 	  返回 标签 中的触发器原型标签.
 	*/
-	SelectTags map[string][]string `json:"selectTags,omitempty"`
+	SelectTags []string `json:"selectTags,omitempty"`
 
 	/**
 	  限制子查询返回的记录数量.适用于以下子查询:selectHosts - 以host分类结果.

@@ -33,7 +33,7 @@ func Test_generateDiscoverRole(t *testing.T) {
 }
 
 func Test_generateItem(t *testing.T) {
-	t.Run("getItem", func(t *testing.T) {
+	t.Run("Test_generateItem", func(t *testing.T) {
 		generateItem()
 	})
 }
@@ -86,6 +86,12 @@ func Test_generateAlert(t *testing.T) {
 	})
 }
 
+func Test_generateGraphItem(t *testing.T) {
+	t.Run("getGraphItem", func(t *testing.T) {
+		generateGraphItem()
+	})
+}
+
 func Test_generateGraph(t *testing.T) {
 	t.Run("getGraph", func(t *testing.T) {
 		generateGraph()
@@ -95,12 +101,6 @@ func Test_generateGraph(t *testing.T) {
 func Test_generateGraphPrototype(t *testing.T) {
 	t.Run("getPrototype", func(t *testing.T) {
 		generateGraphPrototype()
-	})
-}
-
-func Test_generateGraphItem(t *testing.T) {
-	t.Run("getGraphItem", func(t *testing.T) {
-		generateGraphItem()
 	})
 }
 
@@ -125,5 +125,11 @@ func Test_generateTrigger(t *testing.T) {
 func Test_generateTriggerPrototype(t *testing.T) {
 	t.Run("generateTriggerPrototype", func(t *testing.T) {
 		generateTriggerPrototype()
+	})
+}
+
+func Test_generateProblem(t *testing.T) {
+	t.Run("Test_generateProblem", func(t *testing.T) {
+		generateProblem()
 	})
 }

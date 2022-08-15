@@ -34,22 +34,22 @@ type TemplateCreateParam struct {
 	/**
 	  将模版添加到主机 群组。主机群组必须定义groupid 属性。
 	*/
-	Groups []interface{}/* TODO */ `json:"groups,omitempty"`
+	Groups []*HostGroup `json:"groups,omitempty"`
 
 	/**
 	  模版 标签.
 	*/
-	Tags []interface{}/* TODO */ `json:"tags,omitempty"`
+	Tags []*TagObject `json:"tags,omitempty"`
 
 	/**
 	  模版 要链接到模版。模板必须定义templateid属性。
 	*/
-	Templates []interface{}/* TODO */ `json:"templates,omitempty"`
+	Templates []*Template `json:"templates,omitempty"`
 
 	/**
 	  要为模版创建的用户宏 。
 	*/
-	Macros []interface{}/* TODO */ `json:"macros,omitempty"`
+	Macros []*Macro `json:"macros,omitempty"`
 }
 
 type TemplateUpdateParam struct {
@@ -58,27 +58,27 @@ type TemplateUpdateParam struct {
 	/**
 	  用于替换模板所属的当前主机组的主机群组。主机组必须定义groupid属性。
 	*/
-	Groups []interface{}/* TODO */ `json:"groups,omitempty"`
+	Groups []*HostGroup `json:"groups,omitempty"`
 
 	/**
 	  替换当前模板标记的模板标签。
 	*/
-	Tags []interface{}/* TODO */ `json:"tags,omitempty"`
+	Tags []*TagObject `json:"tags,omitempty"`
 
 	/**
 	  用户宏替换给定模板上的当前用户宏。
 	*/
-	Macros []interface{}/* TODO */ `json:"macros,omitempty"`
+	Macros []*Macro `json:"macros,omitempty"`
 
 	/**
 	  替换当前链接的模板的模版。未传递的模板仅被取消链接。模板必须定义templateid属性。
 	*/
-	Templates []interface{}/* TODO */ `json:"templates,omitempty"`
+	Templates []*Template `json:"templates,omitempty"`
 
 	/**
 	  取消链接并清除给定模板的模版。模板必须定义templateid属性。
 	*/
-	TemplatesClear []interface{}/* TODO */ `json:"templates_clear,omitempty"`
+	TemplatesClear []*Template `json:"templates_clear,omitempty"`
 }
 
 type TemplateGetParam struct {
@@ -147,72 +147,72 @@ type TemplateGetParam struct {
 	/**
 	  仅返回带有给定标签的模板。根据标签进行精确匹配，并根据运算符值按标签值进行区分大小写或不区分大小写的搜索。Format: [{"tag": "<tag>", "value": "<value>", "operator": "<operator>"}, ...].一个空数组返回所有模板。可能的运算符值0 - (默认值) Contains;1 - Equals;2 - Not like;3 - Not equal4 - Exists;5 - Not exists.
 	*/
-	Tags []interface{}/* TODO */ `json:"tags,omitempty"`
+	Tags []*TagObject `json:"tags,omitempty"`
 
 	/**
 	  在群组属性中返回模板所属的主机组。
 	*/
-	SelectGroups map[string][]string `json:"selectGroups,omitempty"`
+	SelectGroups []string `json:"selectGroups,omitempty"`
 
 	/**
 	  在标签中返回模板标签。
 	*/
-	SelectTags map[string][]string `json:"selectTags,omitempty"`
+	SelectTags []string `json:"selectTags,omitempty"`
 
 	/**
 	  在主机 中返回链接到模板的主机。支持 count.
 	*/
-	SelectHosts map[string][]string `json:"selectHosts,omitempty"`
+	SelectHosts []string `json:"selectHosts,omitempty"`
 
 	/**
 	  返回 模版 中的子模板。支持 count.
 	*/
-	SelectTemplates map[string][]string `json:"selectTemplates,omitempty"`
+	SelectTemplates []string `json:"selectTemplates,omitempty"`
 
 	/**
 	  返回parentTemplates中的父模板支持 count.
 	*/
-	SelectParentTemplates map[string][]string `json:"selectParentTemplates,omitempty"`
+	SelectParentTemplates []string `json:"selectParentTemplates,omitempty"`
 
 	/**
 	  从httpTests 中的模板返回web场景。支持 count.
 	*/
-	SelectHttpTests map[string][]string `json:"selectHttpTests,omitempty"`
+	SelectHttpTests []string `json:"selectHttpTests,omitempty"`
 
 	/**
 	  从监控项中的模板返回监控项。支持 count.
 	*/
-	SelectItems map[string][]string `json:"selectItems,omitempty"`
+	SelectItems []string `json:"selectItems,omitempty"`
 
 	/**
 	  从discoveries属性中的模板返回低级别自动发现。支持 count.
 	*/
-	SelectDiscoveries map[string][]string `json:"selectDiscoveries,omitempty"`
+	SelectDiscoveries []string `json:"selectDiscoveries,omitempty"`
 
 	/**
 	  从触发器中的模板返回触发器。支持 count.
 	*/
-	SelectTriggers map[string][]string `json:"selectTriggers,omitempty"`
+	SelectTriggers []string `json:"selectTriggers,omitempty"`
 
 	/**
 	  从图形中的模板返回图形。支持 count.
 	*/
-	SelectGraphs map[string][]string `json:"selectGraphs,omitempty"`
+	SelectGraphs []string `json:"selectGraphs,omitempty"`
 
 	/**
 	  从macros属性中的模板返回宏..
 	*/
-	SelectMacros map[string][]string `json:"selectMacros,omitempty"`
+	SelectMacros []string `json:"selectMacros,omitempty"`
 
 	/**
 	  从仪表盘属性中的模板返回仪表板。支持 count.
 	*/
-	SelectDashboards map[string][]string `json:"selectDashboards,omitempty"`
+	SelectDashboards []string `json:"selectDashboards,omitempty"`
 
 	/**
 	  返回一个带有模板值映射的值映射属性。
 	*/
-	SelectValueMaps map[string][]string `json:"selectValueMaps,omitempty"`
+	SelectValueMaps []string `json:"selectValueMaps,omitempty"`
 
 	/**
 	  限制子选择返回的记录数。适用于以下子选项：selectTemplates - 结果将按name排序selectHosts - 按host排序;selectParentTemplates - 按host排序;selectItems - 按name排序;selectDiscoveries - 按name排序;selectTriggers - 按description排序;selectGraphs - 按name排序;selectDashboards - 按name排序.

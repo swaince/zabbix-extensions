@@ -147,22 +147,22 @@ type HostGroupGetParam struct {
 	/**
 	  返回 发现规则 属性和创建主机组的LLD规则。
 	*/
-	SelectDiscoveryRule map[string][]string `json:"selectDiscoveryRule,omitempty"`
+	SelectDiscoveryRule []string `json:"selectDiscoveryRule,omitempty"`
 
 	/**
 	  返回 groupDiscovery 属性和主机组发现对象.发现主机组对象将发现的主机组链接到主机组原型，具有以下属性:groupid - (字符串) 发现的主机组ID;lastcheck - (时间戳) 最后发现主机组的时间;name - (字符串) 主机组原型的名称;parent_group_prototypeid - (字符串) 创建主机组的主机组原型ID;ts_delete - (时间戳) 当主机组未被发现时，删除该主机组的时间。
 	*/
-	SelectGroupDiscovery map[string][]string `json:"selectGroupDiscovery,omitempty"`
+	SelectGroupDiscovery []string `json:"selectGroupDiscovery,omitempty"`
 
 	/**
 	  返回主机属性和属于主机组的主机。支持 count.
 	*/
-	SelectHosts map[string][]string `json:"selectHosts,omitempty"`
+	SelectHosts []string `json:"selectHosts,omitempty"`
 
 	/**
 	  返回 模板 属性和属于主机组的模板。支持 count.
 	*/
-	SelectTemplates map[string][]string `json:"selectTemplates,omitempty"`
+	SelectTemplates []string `json:"selectTemplates,omitempty"`
 
 	/**
 	  限制子选择返回的记录数量。适用于下列子选择项:selectHosts - 结果将按 host 排序;selectTemplates - r结果将按 host 排序。

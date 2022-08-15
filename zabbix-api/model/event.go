@@ -85,7 +85,7 @@ type Event struct {
 	/**
 	  活动媒体类型 URL。
 	*/
-	Urls []interface{}/* TODO */ `json:"urls,omitempty"`
+	Urls []*MediaTypeUrlObject `json:"urls,omitempty"`
 }
 
 type EventGetParam struct {
@@ -144,7 +144,7 @@ type EventGetParam struct {
 	/**
 	  仅返回具有给定标签的事件。通过标签进行精确匹配，通过值和操作符进行不区分大小写的匹配。格式：[{"tag"："<tag>"， "value"："<value>"，"operator"："<operator>"}，...]。空数组返回所有事件。可能的运算符类型：0 - （默认） Like（类似于……）；1 - Equal（等于）；2 - Not like（不类似于……）；3 - Not equal（不等于）；4 - Exists（存在）；5 - Not exists（不存在）。
 	*/
-	Tags []interface{}/* TODO */ `json:"tags,omitempty"`
+	Tags []*TagObject `json:"tags,omitempty"`
 
 	/**
 	  仅返回 ID 大于或等于给定 ID 的事件。
@@ -184,35 +184,48 @@ type EventGetParam struct {
 	/**
 	  返回 主机 属性，其中 hosts 包含创建事件的对象。仅支持由触发器、监控项或 LLD 规则生成的事件。
 	*/
-	SelectHosts map[string][]string `json:"selectHosts,omitempty"`
+	SelectHosts []string `json:"selectHosts,omitempty"`
 
 	/**
 	  返回带有创建事件的对象的 'relatedObject ' 属性。返回的对象类型取决于事件类型。
 	*/
-	SelectRelatedObject map[string][]string `json:"selectRelatedObject,omitempty"`
+	SelectRelatedObject []string `json:"selectRelatedObject,omitempty"`
 
 	/**
 	  返回由事件生成的告警的 告警 属性。警报按时间倒序排列。
 	*/
-	SelectAlerts map[string][]string `json:"select_alerts,omitempty"`
+	SelectAlerts []string `json:"select_alerts,omitempty"`
 
 	/**
 	  返回带有事件更新的 acknowledges 属性。 事件更新按时间倒序排列。事件更新对象具有以下属性：acknowledgeid - (string) 确认事件的ID；userid - (string) 更新事件的用户ID；eventid - (string) 更新事件的ID；clock - (timestamp) 事件被更新的时间；message - (string) 消息文本；action - (integer) 更新执行的操作，参见 event.acknowledge；old_severity - (integer) 此更新操作之前的事件严重性；new_severity - (integer) 此更新操作后的事件严重性；username - (string) 更新该事件的用户的username（用户名）；name - (string) 更新该事件的用户的name（可见名）；surname - (string) 更新事件的用户的surname（姓）。支持 count。
 	*/
-	SelectAcknowledges map[string][]string `json:"select_acknowledges,omitempty"`
+	SelectAcknowledges []string `json:"select_acknowledges,omitempty"`
 
 	/**
 	  返回事件标签的 标签 属性。
 	*/
-	SelectTags map[string][]string `json:"selectTags,omitempty"`
+	SelectTags []string `json:"selectTags,omitempty"`
 
 	/**
 	  返回维护列表的suppression_data 属性：maintenanceid - (string) 维护期ID；suppress_until - (integer) 事件被抑制的时间。
 	*/
-	SelectSuppressionData map[string][]string `json:"selectSuppressionData,omitempty"`
+	SelectSuppressionData []string `json:"selectSuppressionData,omitempty"`
 
 	/**
 	  按给定属性对结果进行排序。可用值：eventid，objectid 和 clock。
 	*/
 	Sortfield []string `json:"sortfield,omitempty"`
+}
+
+type MediaTypeUrlObject struct {
+
+	/**
+	  媒体类型定义的 URL 名称。
+	*/
+	Name string `json:"name,omitempty"`
+
+	/**
+	  媒体类型定义的 URL 值。
+	*/
+	Url string `json:"url,omitempty"`
 }

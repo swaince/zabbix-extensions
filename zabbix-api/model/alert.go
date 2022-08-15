@@ -149,17 +149,17 @@ type AlertGetParam struct {
 	/**
 	  在 hosts 属性中返回触发动作操作的主机。
 	*/
-	SelectHosts map[string][]string `json:"selectHosts,omitempty"`
+	SelectHosts []string `json:"selectHosts,omitempty"`
 
 	/**
 	  在 mediatypes 属性中以数组形式返回消息告警的媒介类型。
 	*/
-	SelectMediatypes map[string][]string `json:"selectMediatypes,omitempty"`
+	SelectMediatypes []string `json:"selectMediatypes,omitempty"`
 
 	/**
 	  在 users 属性中以数组形式返回消息发送到的用户。
 	*/
-	SelectUsers map[string][]string `json:"selectUsers,omitempty"`
+	SelectUsers []string `json:"selectUsers,omitempty"`
 
 	/**
 	  根据给定的属性排序结果。可用值： alertid, clock, eventid, mediatypeid, sendto 和 status。

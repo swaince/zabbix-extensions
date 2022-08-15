@@ -1,7 +1,6 @@
 package fetch
 
 import (
-	"errors"
 	"fmt"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
@@ -64,23 +63,27 @@ var (
 )
 
 type FieldObject struct {
-	RawKey   string
-	RawType  string
-	RawDesc  string
-	NewKey   string
-	NewType  string
-	NewDesc  string
-	Tag      string
-	ParseKey string
+	RawKey    string
+	RawType   string
+	RawDesc   string
+	NewKey    string
+	NewType   string
+	NewDesc   string
+	FinalType string
+	Tag       string
+	ParseKey  string
 }
 
 func (f *FieldObject) Parse() {
 	parseKey := ParseKey(f.RawKey)
 	f.NewKey = UnderscoreToUpperCamelCase(parseKey)
-	f.NewType = ParseType(f.RawType)
+	newType := ParseType(f.RawType)
+	f.NewType = newType
+	f.FinalType = newType
 	f.NewDesc = f.RawDesc
 	f.Tag = fmt.Sprintf("`json:\"%s,omitempty\"`", parseKey)
 	f.ParseKey = parseKey
+
 }
 
 func ParseKey(rawKey string) string {
@@ -99,11 +102,11 @@ func ParseType(rawType string) string {
 		return "bool"
 	} else if rawType == "flag" || rawType == "标记" {
 		return "bool"
-	} else if rawType == "integer" || rawType == "整数" || rawType == "整型" {
+	} else if rawType == "integer" || rawType == "整数" || rawType == "整型" || rawType == "integer（整数）" {
 		return "int64"
 	} else if rawType == "float" || rawType == "浮点数" || rawType == "浮点型" {
 		return "float64"
-	} else if rawType == "string" || rawType == "字符串" {
+	} else if rawType == "string" || rawType == "字符串" || rawType == "（字符串）" {
 		return "string"
 	} else if rawType == "text" {
 		return "string"
@@ -111,10 +114,10 @@ func ParseType(rawType string) string {
 		return "int64"
 	} else if rawType == "array" || rawType == "属组" || rawType == "数组" {
 		return "[]interface{} /* TODO */"
-	} else if rawType == "object" || rawType == "对象" || rawType == "HTTP fields" || rawType == "Media type URLs" {
+	} else if rawType == "object" || rawType == "对象" || rawType == "HTTP fields" || rawType == "Media type URLs" || rawType == "媒介类型 URLs" {
 		return "interface{} /* TODO */"
 	} else if rawType == "query" || rawType == "查询" {
-		return "map[string][]string"
+		return "[]string"
 	} else if rawType == "id" {
 		return "string"
 	} else if strings.Contains(rawType, "array") || strings.Contains(rawType, "数组") || strings.Contains(rawType, "属组") {
@@ -127,7 +130,21 @@ func ParseType(rawType string) string {
 		t = strings.TrimSpace(t)
 		return fmt.Sprintf("%s%s", "[]", ParseType(t))
 	} else {
-		panic(errors.New(fmt.Sprintf("type %s don't support", rawType)))
+		fmt.Printf("type %s don't support, will set default type: interface{}", rawType)
+		return "interface{}/* TODO */"
+	}
+}
+
+func (s *StructObject) ParseStructType(mappings map[string]string) {
+	if mappings == nil {
+		return
+	}
+	for k, v := range mappings {
+		for _, field := range s.Fields {
+			if k == field.NewKey {
+				field.FinalType = v
+			}
+		}
 	}
 }
 

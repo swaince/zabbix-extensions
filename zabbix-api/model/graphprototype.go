@@ -104,7 +104,7 @@ type GraphPrototypeCreateParam struct {
 	/**
 	  要为图表原型创建的图表项目。图形项目可以同时引用项目和项目原型，但至少要有一个项目原型。
 	*/
-	Gitems []interface{}/* TODO */ `json:"gitems,omitempty"`
+	Gitems []*GraphItem `json:"gitems,omitempty"`
 }
 
 type GraphPrototypeUpdateParam struct {
@@ -113,7 +113,7 @@ type GraphPrototypeUpdateParam struct {
 	/**
 	  图表项目将替换现有的图表项目。如果一个图表项目定义了 gitemid 属性，它将会被更新，否则会创建一个新的图表项目。
 	*/
-	Gitems []interface{}/* TODO */ `json:"gitems,omitempty"`
+	Gitems []*GraphItem `json:"gitems,omitempty"`
 }
 
 type GraphPrototypeGetParam struct {
@@ -162,32 +162,32 @@ type GraphPrototypeGetParam struct {
 	/**
 	  返回一个发现规则属性，其带有图表原型所属的LLD规则。
 	*/
-	SelectDiscoveryRule map[string][]string `json:"selectDiscoveryRule,omitempty"`
+	SelectDiscoveryRule []string `json:"selectDiscoveryRule,omitempty"`
 
 	/**
 	  返回一个图表项属性，其中包含图表原型中使用的图表项目。
 	*/
-	SelectGraphItems map[string][]string `json:"selectGraphItems,omitempty"`
+	SelectGraphItems []string `json:"selectGraphItems,omitempty"`
 
 	/**
 	  返回一个主机组属性，包含图表原型所属的主机组。
 	*/
-	SelectGroups map[string][]string `json:"selectGroups,omitempty"`
+	SelectGroups []string `json:"selectGroups,omitempty"`
 
 	/**
 	  返回一个主机属性，包含图表原型所属的主机。
 	*/
-	SelectHosts map[string][]string `json:"selectHosts,omitempty"`
+	SelectHosts []string `json:"selectHosts,omitempty"`
 
 	/**
 	  返回一个items属性，包含图表原型中使用的监控项和监控项原型。
 	*/
-	SelectItems map[string][]string `json:"selectItems,omitempty"`
+	SelectItems []string `json:"selectItems,omitempty"`
 
 	/**
 	  返回一个模板属性，其带有含图表原型所属的模板。
 	*/
-	SelectTemplates map[string][]string `json:"selectTemplates,omitempty"`
+	SelectTemplates []string `json:"selectTemplates,omitempty"`
 
 	/**
 	  按给定的属性对结果进行排序。可能的取值： graphid、 name 和 graphtype。

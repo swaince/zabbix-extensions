@@ -21,7 +21,7 @@ type {{ .StructName }} struct {
     /**
     {{ .NewDesc | unescaped }}
     */
-	{{ .NewKey}} {{ .NewType }} {{ .Tag | unescaped }}
+	{{ .NewKey}} {{ .FinalType }} {{ .Tag | unescaped }}
     {{ end }}
 }
 {{ end }}`

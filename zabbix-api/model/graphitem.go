@@ -69,7 +69,7 @@ type GraphItemGetParam struct {
 	/**
 	  返回一个图表属性，其中包含该监控项所属的图表的数组。
 	*/
-	SelectGraphs map[string][]string `json:"selectGraphs,omitempty"`
+	SelectGraphs []string `json:"selectGraphs,omitempty"`
 
 	/**
 	  按给定的属性对结果进行排序。可用值： gitemid。
